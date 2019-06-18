@@ -1,6 +1,11 @@
 import _ from "lodash"
 import axios, { AxiosInstance } from "axios"
 
+interface QueryBounds {
+  lat: { min: number; max: number }
+  lon: { min: number; max: number }
+}
+
 export default class GeoIPV4Service {
   private http: AxiosInstance
 
@@ -13,13 +18,12 @@ export default class GeoIPV4Service {
     })
   }
 
-  async queryBounds(query: { lat: { min: number; max: number }; lon: { min: number; max: number } }): Promise<any> {
-    let response = await this.http.get("/", {
+  public async queryBounds(query: QueryBounds): Promise<any> {
+    return await this.http.get("/", {
       params: {
         lat: _.join([query.lat.min, query.lat.max], ","),
         lon: _.join([query.lon.min, query.lon.max], ","),
       },
     })
-    return response
   }
 }
