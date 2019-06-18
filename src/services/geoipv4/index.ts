@@ -12,7 +12,7 @@ export default class GeoIPV4Service {
 
   constructor() {
     this.http = axios.create({
-      baseURL: "http://10.0.2.15:5000/api/geo/ipv4",
+      baseURL: process.env.VUE_APP_API_BASE,
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
