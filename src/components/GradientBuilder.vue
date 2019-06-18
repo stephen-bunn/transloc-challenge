@@ -47,7 +47,7 @@ interface ColorValue {
   source: string
 }
 
-const defaultGradient: Gradient[] = [
+export const defaultGradient: Gradient[] = [
   { value: 15, color: "#00E5FF", menu: false },
   { value: 25, color: "#76FF03", menu: false },
   { value: 30, color: "#FF3D00", menu: false },

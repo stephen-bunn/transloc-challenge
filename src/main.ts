@@ -4,7 +4,7 @@ import router from "@/router"
 import store from "@/store"
 
 import "@/plugins/vuetify"
-
+import "@/plugins/cookies"
 // reference leaflet styles on the application
 import "leaflet/dist/leaflet.css"
 
