@@ -1,7 +1,7 @@
 // https://prettier.io/docs/en/configuration.html
 
 module.exports = {
-  trailingComma: "es5",
+  trailingComma: "es6",
   tabWidth: 2,
   semi: false,
   singleQuote: false,

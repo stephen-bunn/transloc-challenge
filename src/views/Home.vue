@@ -47,7 +47,7 @@ export default class Home extends Vue {
   public gradient: HeatMapGradient = {}
 
   public async created() {
-    let storedOptions: HeatMapCookie = this.$cookies.getJSON(cookiesKey)
+    const storedOptions: HeatMapCookie = this.$cookies.getJSON(cookiesKey)
     if (_.isObject(storedOptions)) {
       this.blur = storedOptions.blur
       this.radius = storedOptions.radius
@@ -81,7 +81,7 @@ export default class Home extends Vue {
   }
 
   private onGradientUpdated(value: Gradient[]) {
-    let gradient: HeatMapGradient = {}
+    const gradient: HeatMapGradient = {}
     _.forEach(value, (entry: Gradient) => {
       gradient[entry.value / 100.0] = entry.color
     })

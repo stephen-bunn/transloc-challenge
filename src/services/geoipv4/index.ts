@@ -1,4 +1,5 @@
 import _ from "lodash"
+import { FeatureCollection } from "geojson"
 import axios, { AxiosInstance } from "axios"
 
 interface QueryBounds {
@@ -18,12 +19,12 @@ export default class GeoIPV4Service {
     })
   }
 
-  public async queryBounds(query: QueryBounds): Promise<any> {
-    return await this.http.get("/", {
+  public async queryBounds(query: QueryBounds): Promise<FeatureCollection> {
+    return (await this.http.get("/", {
       params: {
         lat: _.join([query.lat.min, query.lat.max], ","),
         lon: _.join([query.lon.min, query.lon.max], ","),
       },
-    })
+    })).data
   }
 }

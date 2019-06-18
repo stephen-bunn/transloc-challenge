@@ -26,23 +26,23 @@ interface ColorValue {
   hex: string
   hex8: string
   hsl: {
-    a: number
-    h: number
-    s: number
-    l: number
+    a: number,
+    h: number,
+    s: number,
+    l: number,
   }
   hsv: {
-    a: number
-    h: number
-    s: number
-    v: number
+    a: number,
+    h: number,
+    s: number,
+    v: number,
   }
   oldHue: number
   rgba: {
-    a: number
-    r: number
-    g: number
-    b: number
+    a: number,
+    r: number,
+    g: number,
+    b: number,
   }
   source: string
 }
@@ -66,12 +66,12 @@ export default class GradientBuilder extends Vue {
   }
 
   public onValueUpdated(entryIdx: number, value: number) {
-    _.forEach(_.range(entryIdx), lowIdx => {
+    _.forEach(_.range(entryIdx), (lowIdx: number) => {
       if (this.gradient[lowIdx].value > value) {
         this.gradient[lowIdx].value = value
       }
     })
-    _.forEach(_.range(entryIdx + 1, _.size(this.gradient)), highIdx => {
+    _.forEach(_.range(entryIdx + 1, _.size(this.gradient)), (highIdx: number) => {
       if (this.gradient[highIdx].value < value) {
         this.gradient[highIdx].value = value
       }

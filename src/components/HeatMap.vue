@@ -10,18 +10,14 @@ import _ from "lodash"
 import { Component, Prop, Watch, Vue } from "vue-property-decorator"
 import { LMap, LTileLayer } from "vue2-leaflet"
 import { LatLng, Map } from "leaflet"
+import { Feature, Point } from "geojson"
 import "leaflet.heat"
 
 import GeoIPV4Service from "@/services/geoipv4"
 
-interface LeaftletBounds {
+export interface LeaftletBounds {
   _southWest: { lat: number; lng: number }
   _northEast: { lat: number; lng: number }
-}
-interface NetworkResult {
-  lat: number
-  lng: number
-  weight: number
 }
 export interface HeatMapGradient {
   [k: number]: string
@@ -53,18 +49,19 @@ export default class HeatMap extends Vue {
     return { minOpacity: this.minOpacity, radius: this.radius, max: this.max, blur: this.blur, gradient: this.gradient }
   }
 
-  @Watch("heatLayerOptions")
-  private onHeatLayerOptionsUpdated(value: any) {
-    this.heatLayer.setOptions(value)
-  }
-
   public async mounted() {
     // @ts-ignore
     this.heatLayer = L.heatLayer([], this.heatLayerOptions).addTo(this.map)
     this.map.locate({ setView: true, maxZoom: 9 })
+    this.map.setMaxBounds([[85, -180], [-85, 180]])
     if (!_.isNil(this.bounds)) {
       this.updateHeatmap(this.bounds)
     }
+  }
+
+  @Watch("heatLayerOptions")
+  private onHeatLayerOptionsUpdated(value: any) {
+    this.heatLayer.setOptions(value)
   }
 
   private async updateHeatmap(bounds: LeaftletBounds) {
@@ -73,8 +70,9 @@ export default class HeatMap extends Vue {
         lat: { min: bounds._southWest.lat, max: bounds._northEast.lat },
         lon: { min: bounds._southWest.lng, max: bounds._northEast.lng },
       })
-      const latlngs = _.map(response.data.networks, (entry: NetworkResult) => {
-        return [entry.lat, entry.lng, entry.weight]
+      const latlngs = _.map(response.features, (entry: Feature<Point>) => {
+        return [entry.geometry.coordinates[0], entry.geometry.coordinates[1], _.get(entry.properties, "weight")]
+        // return [entry.lat, entry.lng, entry.weight]
       })
       this.heatLayer.setLatLngs(latlngs)
     }
