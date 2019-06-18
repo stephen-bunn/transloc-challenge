@@ -83,7 +83,7 @@ export default class GradientBuilder extends Vue {
   }
 
   public addGradient() {
-    this.gradient.push({ value: 100, color: "#000000", menu: false })
+    this.gradient.push({ value: 100, color: "#212121", menu: false })
   }
 
   @Watch("gradient", { deep: true })
