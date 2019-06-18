@@ -1,7 +1,9 @@
 <template lang="pug">
   v-app(:dark="dark")
+    v-toolbar(app flat)
+      v-toolbar-title TransLoc Challenge
     v-content
-      v-container(fill-height)
+      v-container(fluid fill-height)
         router-view
 </template>
 
@@ -15,5 +17,6 @@ export default class App extends Vue {
 </script>
 
 <style lang="stylus">
+@import "~@icon/feather/feather.css"
 @import "~@/assets/styles/main"
 </style>

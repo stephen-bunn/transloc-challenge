@@ -1,12 +1,13 @@
 <template lang="pug">
-  div.heatmap
-    l-map(:zoom="zoom" :center="center" @update:bounds="onBoundsUpdated" @update:center="onCenterUpdated" ref="map").leaflet-map
-      l-tile-layer(:url="url")
+  v-card(flat).heatmap.transparent
+    v-card-text
+      l-map(:zoom="zoom" :center="center" @update:bounds="onBoundsUpdated" @update:center="onCenterUpdated" ref="map").leaflet-map
+        l-tile-layer(:url="url")
 </template>
 
 <script lang="ts">
 import _ from "lodash"
-import { Component, Prop, Vue } from "vue-property-decorator"
+import { Component, Prop, Watch, Vue } from "vue-property-decorator"
 import { LMap, LTileLayer } from "vue2-leaflet"
 import { LatLng, Map } from "leaflet"
 import "leaflet.heat"
@@ -22,32 +23,39 @@ interface NetworkResult {
   lng: number
   weight: number
 }
+export interface HeatMapGradient {
+  [k: number]: string
+}
 
 const geoService = new GeoIPV4Service()
+const defaultGradient = { 0.15: "#00E5FF", 0.25: "#76FF03", 0.3: "#FF3D00" }
 
 @Component({ name: "heat-map", components: { LMap, LTileLayer } })
 export default class HeatMap extends Vue {
   public url: string = "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
   public zoom: number = 3
-  public center: number[] = [47.41322, -1.219482]
+  public center: number[] = [0, 0]
   public bounds: LeaftletBounds | null = null
-  public minOpacity: number = 0.1
-  public radius: number = 25
-  public blur: number = 10
-  public max: number = 1
   public heatLayer: any = null
+
+  @Prop({ type: Number, required: false, default: 1.0 }) private readonly max!: number
+  @Prop({ type: Number, required: false, default: 0.1 }) private readonly minOpacity!: number
+  @Prop({ type: Number, required: false, default: 25 }) private readonly radius!: number
+  @Prop({ type: Number, required: false, default: 10 }) private readonly blur!: number
+  @Prop({ type: Object, required: false, default: defaultGradient }) private readonly gradient!: HeatMapGradient
 
   get map(): Map {
     // @ts-ignore
     return this.$refs.map.mapObject
   }
 
-  get gradient(): { [k: number]: string } {
-    return { 0.05: "blue", 0.1: "lime", 0.2: "red" }
-  }
-
   get heatLayerOptions(): any {
     return { minOpacity: this.minOpacity, radius: this.radius, max: this.max, blur: this.blur, gradient: this.gradient }
+  }
+
+  @Watch("heatLayerOptions")
+  private onHeatLayerOptionsUpdated(value: any) {
+    this.heatLayer.setOptions(value)
   }
 
   public async mounted() {
@@ -77,10 +85,12 @@ export default class HeatMap extends Vue {
     if (!_.isNil(this.bounds)) {
       this.updateHeatmap(this.bounds)
     }
+    this.$emit("update:bounds", bounds)
   }
 
   private async onCenterUpdated(center: any) {
     this.center = center
+    this.$emit("update:center", center)
   }
 }
 </script>
@@ -89,7 +99,12 @@ export default class HeatMap extends Vue {
 .heatmap
   height 100%
   width 100%
+  border-radius 10px
 
-  .leaflet-map
-    height 80%
+  .v-card__text
+    height 100%
+
+    .leaflet-map
+      height 100%
+      border-radius 10px
 </style>
