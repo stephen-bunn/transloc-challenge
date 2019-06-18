@@ -11,6 +11,7 @@ import { Component, Prop, Watch, Vue } from "vue-property-decorator"
 import { LMap, LTileLayer } from "vue2-leaflet"
 import { LatLng, Map } from "leaflet"
 import { Feature, Point } from "geojson"
+import { debounce } from "helpful-decorators"
 import "leaflet.heat"
 
 import GeoIPV4Service from "@/services/geoipv4"
@@ -53,6 +54,7 @@ export default class HeatMap extends Vue {
     // @ts-ignore
     this.heatLayer = L.heatLayer([], this.heatLayerOptions).addTo(this.map)
     this.map.locate({ setView: true, maxZoom: 9 })
+    this.map.setMinZoom(3)
     this.map.setMaxBounds([[85, -180], [-85, 180]])
     if (!_.isNil(this.bounds)) {
       this.updateHeatmap(this.bounds)
@@ -64,6 +66,7 @@ export default class HeatMap extends Vue {
     this.heatLayer.setOptions(value)
   }
 
+  @debounce(1000)
   private async updateHeatmap(bounds: LeaftletBounds) {
     if (!_.isNil(bounds)) {
       const response = await geoService.queryBounds({
