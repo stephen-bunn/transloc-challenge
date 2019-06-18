@@ -1,0 +1,16 @@
+{
+  "name": "transloc-challenge",
+  "description": "The transloc challenge frontend (written with Vue.js)",
+  "scripts": {
+    "postinstall": "npm run build",
+    "test": "npm run test:unit"
+  },
+  "env": {},
+  "formation": {},
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
