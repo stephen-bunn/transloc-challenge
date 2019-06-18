@@ -1,7 +1,12 @@
 <template lang="pug">
   v-app(:dark="dark")
-    v-toolbar(app flat)
-      v-toolbar-title TransLoc Challenge
+    v-toolbar(app flat dense)
+      v-toolbar-title.headline TransLoc GeoIPv4
+      v-spacer
+      v-toolbar-items
+        v-btn(flat tag="a" href="https://geolite.maxmind.com/download/geoip/database/GeoLite2-City-CSV.zip" target="_blank")
+          v-icon(left) fe-database
+          span Dataset
     v-content
       v-container(fluid fill-height)
         router-view

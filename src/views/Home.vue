@@ -2,11 +2,7 @@
   v-layout(row fill-height)
     v-flex.xs2
       v-layout(column)
-        span
-          v-icon(left) fe-sliders
-          span.title Options
-
-        v-card.mt-4
+        v-card.mt-3
           v-card-title.title Heat Map
           v-card-text
             v-slider(thumb-label v-model="blur" label="Blur")
