@@ -1,6 +1,7 @@
 <template lang="pug">
   v-card(flat).heatmap.transparent
     v-card-text
+      v-progress-linear(indeterminate query :active="loading").ma-0
       l-map(:zoom="zoom" :center="center" @update:bounds="onBoundsUpdated" @update:center="onCenterUpdated" ref="map").leaflet-map
         l-tile-layer(:url="url")
 </template>
@@ -77,7 +78,6 @@ export default class HeatMap extends Vue {
       })
       const latlngs = _.map(response.features, (entry: Feature<Point>) => {
         return [entry.geometry.coordinates[0], entry.geometry.coordinates[1], _.get(entry.properties, "weight")]
-        // return [entry.lat, entry.lng, entry.weight]
       })
       // @ts-ignore
       this.map.attributionControl.setPrefix(`Rendering ${_.size(latlngs)} points`)
@@ -109,6 +109,9 @@ export default class HeatMap extends Vue {
 
   .v-card__text
     height 100%
+
+    .v-progress-linear
+      border-radius 10px
 
     .leaflet-map
       height 100%

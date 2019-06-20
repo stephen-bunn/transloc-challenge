@@ -2,7 +2,7 @@
   v-layout(row fill-height)
     v-flex.xs2
       v-layout(column)
-        v-card.mt-3
+        v-card.mt-4
           v-card-title
             span.title Heat Map
             v-tooltip(right :max-width="250" :z-index="9999")
