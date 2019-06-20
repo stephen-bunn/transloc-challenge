@@ -79,6 +79,8 @@ export default class HeatMap extends Vue {
         return [entry.geometry.coordinates[0], entry.geometry.coordinates[1], _.get(entry.properties, "weight")]
         // return [entry.lat, entry.lng, entry.weight]
       })
+      // @ts-ignore
+      this.map.attributionControl.setPrefix(`Rendering ${_.size(latlngs)} points`)
       this.heatLayer.setLatLngs(latlngs)
       this.loading = false
     }
