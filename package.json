@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@icon/feather": "^1.1.0-alpha.2",
@@ -60,13 +61,15 @@
     "@vue/cli-plugin-e2e-cypress": "^3.7.0",
     "@vue/cli-plugin-pwa": "^3.7.0",
     "@vue/cli-plugin-typescript": "^3.7.0",
-    "@vue/cli-service": "^3.7.0",
+    "@vue/cli-plugin-unit-jest": "^3.8.0",
+    "@vue/cli-service": "^3.8.4",
     "@vue/test-utils": "^1.0.0-beta.29",
     "jest": "^24.8.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.4.3",
     "vue-cli-plugin-vuetify": "^0.5.0",
     "vue-template-compiler": "^2.5.21",

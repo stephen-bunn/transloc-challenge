@@ -9,9 +9,9 @@
               v-icon(slot="activator").ml-2 fe-help-circle
               span Control various values used to render the points displayed on the heatmap.
           v-card-text
-            v-slider(thumb-label v-model="blur" label="Blur")
-            v-slider(thumb-label v-model="radius" label="Radius")
-            v-slider(thumb-label v-model="opacity" label="Opacity")
+            v-slider(thumb-label v-model="blur" label="Blur" data-test="blur-slider")
+            v-slider(thumb-label v-model="radius" label="Radius" data-test="radius-slider")
+            v-slider(thumb-label v-model="opacity" label="Opacity" data-test="opacity-slider")
 
         v-card.mt-4
           v-card-title.title

@@ -1,0 +1,16 @@
+{
+  "sliders": {
+    "blur": "input[data-test=\"blur-slider\"]",
+    "radius": "input[data-test=\"radius-slider\"]",
+    "opacity": "input[data-test=\"opacity-slider\"]",
+    "firstGradient": "input[data-test=\"gradient-slider\"]:first",
+    "lastGradient": "input[data-test=\"gradient-slider\"]:last",
+    "lastGradientIcon": "div[data-test=\"gradient-slider\"]:last > .v-input__append-outer > .v-input__icon"
+  },
+  "buttons": {
+    "addGradient": "[data-test=\"add-gradient-button\"]"
+  },
+  "misc": {
+    "allGradients": "input[data-test=\"gradient-slider\"]"
+  }
+}

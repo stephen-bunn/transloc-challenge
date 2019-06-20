@@ -7,6 +7,7 @@
             thumb-label
             prepend-icon="fe-edit-2"
             append-icon="fe-x-circle"
+            data-test="gradient-slider"
             :color="entry.color"
             v-model="entry.value"
             @input="(value) => onValueUpdated(entryIdx, value)"
@@ -15,7 +16,7 @@
           )
         color-picker(:value="{hex: `${entry.color}`}" @input="(value) => onColorUpdated(entryIdx, value)")
     v-flex.justify-end
-      v-btn(outline block color="primary" @click="addGradient")
+      v-btn(outline block color="primary" data-test="add-gradient-button" @click="addGradient")
         span Add Color
 </template>
 
