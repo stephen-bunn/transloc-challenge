@@ -3,14 +3,22 @@
     v-flex.xs2
       v-layout(column)
         v-card.mt-3
-          v-card-title.title Heat Map
+          v-card-title
+            span.title Heat Map
+            v-tooltip(right :max-width="250" :z-index="9999")
+              v-icon(slot="activator").ml-2 fe-help-circle
+              span Control various values used to render the points displayed on the heatmap.
           v-card-text
             v-slider(thumb-label v-model="blur" label="Blur")
             v-slider(thumb-label v-model="radius" label="Radius")
             v-slider(thumb-label v-model="opacity" label="Opacity")
 
         v-card.mt-4
-          v-card-title.title Gradient
+          v-card-title.title
+            span.title Gradient
+            v-tooltip(right :max-width="250" :z-index="9999")
+              v-icon(slot="activator").ml-2 fe-help-circle
+              span Control the color gradient used to render the heatmap.
           v-card-text
             gradient-builder(@change="onGradientUpdated")
 

@@ -34,6 +34,7 @@ export default class HeatMap extends Vue {
   public center: number[] = [0, 0]
   public bounds: LeaftletBounds | null = null
   public heatLayer: any = null
+  private loading: boolean = false
 
   @Prop({ type: Number, required: false, default: 1.0 }) private readonly max!: number
   @Prop({ type: Number, required: false, default: 0.1 }) private readonly minOpacity!: number
@@ -69,6 +70,7 @@ export default class HeatMap extends Vue {
   @debounce(1000)
   private async updateHeatmap(bounds: LeaftletBounds) {
     if (!_.isNil(bounds)) {
+      this.loading = true
       const response = await geoService.queryBounds({
         lat: { min: bounds._southWest.lat, max: bounds._northEast.lat },
         lon: { min: bounds._southWest.lng, max: bounds._northEast.lng },
@@ -78,6 +80,7 @@ export default class HeatMap extends Vue {
         // return [entry.lat, entry.lng, entry.weight]
       })
       this.heatLayer.setLatLngs(latlngs)
+      this.loading = false
     }
   }
 
