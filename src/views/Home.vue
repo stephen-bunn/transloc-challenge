@@ -33,6 +33,7 @@ import { Component, Watch, Vue } from "vue-property-decorator"
 import GradientBuilder, { Gradient, defaultGradient } from "@/components/GradientBuilder.vue"
 import HeatMap, { HeatMapGradient } from "@/components/HeatMap.vue"
 
+// the type used for storing a cookie to persist application state between sessions
 export interface HeatMapCookie {
   blur: number
   radius: number
@@ -40,21 +41,23 @@ export interface HeatMapCookie {
   gradient: HeatMapGradient
 }
 
+// they cookie name to use for persisting application state
 export const cookiesKey = "transloc-heatmap"
 
-@Component({
-  components: {
-    HeatMap,
-    GradientBuilder,
-  },
-})
+@Component({ components: { HeatMap, GradientBuilder } })
 export default class Home extends Vue {
   public blur: number = 12
   public radius: number = 25
   public opacity: number = 10
   public gradient: HeatMapGradient = {}
 
+  /**
+   * Home view `created` life-cycle hook.
+   *
+   * @public
+   */
   public async created() {
+    // restore application state from cookie if it exists
     const storedOptions: HeatMapCookie = this.$cookies.getJSON(cookiesKey)
     if (_.isObject(storedOptions)) {
       this.blur = storedOptions.blur
@@ -64,6 +67,11 @@ export default class Home extends Vue {
     }
   }
 
+  /**
+   * Dump basic application state out to a cookie.
+   *
+   * @private
+   */
   private updateCookies() {
     this.$cookies.set(cookiesKey, {
       gradient: this.gradient,
@@ -73,21 +81,41 @@ export default class Home extends Vue {
     })
   }
 
+  /**
+   * Watch for updates to the blur slider and update application state.
+   *
+   * @private
+   */
   @Watch("blur")
   private onBlurUpdated(value: number) {
     this.updateCookies()
   }
 
+  /**
+   * Watch for updates to the radius slider and update application state.
+   *
+   * @private
+   */
   @Watch("radius")
   private onRadiusUpdated(value: number) {
     this.updateCookies()
   }
 
+  /**
+   * Watch for updates to the opacity slider and update application state.
+   *
+   * @private
+   */
   @Watch("opacity")
   private onOpacityUpdated(value: number) {
     this.updateCookies()
   }
 
+  /**
+   * Callback handler for when the gradient control is updated to update the application state.
+   *
+   * @private
+   */
   private onGradientUpdated(value: Gradient[]) {
     const gradient: HeatMapGradient = {}
     _.forEach(value, (entry: Gradient) => {
@@ -97,6 +125,13 @@ export default class Home extends Vue {
     this.updateCookies()
   }
 
+  /**
+   * The actual minimum opacity to use for the heatmap.
+   *
+   * @note Slider requires 0-100 but heatmap requires 0.0-0.1
+   * @public
+   * @type {number}
+   */
   get minOpacity(): number {
     if (this.opacity > 0) {
       return this.opacity / 100.0
