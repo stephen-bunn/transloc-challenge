@@ -26,6 +26,7 @@ export interface HeatMapGradient {
 }
 
 const geoService = new GeoIPV4Service()
+const defaultCenter: [number, number] = [-78.406677,35.762672]
 const defaultGradient = { 0.15: "#00E5FF", 0.25: "#76FF03", 0.3: "#FF3D00" }
 
 @Component({ name: "heat-map", components: { LMap, LTileLayer } })
@@ -58,6 +59,9 @@ export default class HeatMap extends Vue {
     this.map.locate({ setView: true, maxZoom: 9 })
     this.map.setMinZoom(3)
     this.map.setMaxBounds([[85, -180], [-85, 180]])
+    if (_.isNil(this.bounds)) {
+      this.map.setView(defaultCenter, 10)
+    }
     if (!_.isNil(this.bounds)) {
       this.updateHeatmap(this.bounds)
     }
