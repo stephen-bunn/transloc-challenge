@@ -26,7 +26,7 @@ export interface HeatMapGradient {
 }
 
 const geoService = new GeoIPV4Service()
-const defaultCenter: [number, number] = [-78.406677,35.762672]
+const defaultCenter: [number, number] = [35.762672,-78.406677]
 const defaultGradient = { 0.15: "#00E5FF", 0.25: "#76FF03", 0.3: "#FF3D00" }
 
 @Component({ name: "heat-map", components: { LMap, LTileLayer } })
