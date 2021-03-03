@@ -65,7 +65,7 @@
     "@vue/cli-service": "^3.8.4",
     "@vue/test-utils": "^1.0.0-beta.29",
     "jest": "^24.8.0",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "pug-plain-loader": "^1.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
